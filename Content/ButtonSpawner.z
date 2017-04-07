@@ -1,0 +1,80 @@
+class ButtonSpawner : ZilchComponent
+{
+    //Random Generator
+    var Rand : Random = Random();
+    
+    [Property]
+    var ButtonType : Integer = 1;
+    [Property]
+    var LimitNum : Integer = 21;
+    var Timer : Real = 0;
+    var Delay : Real = 1;
+    var RandomDelay : Real = 0;
+    var Start : Boolean = true;
+    
+    var FinishedSpawning : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        if(tracker.LevelTrackerOffice.CanPlay == true && this.LimitNum > 0)
+        {
+            this.Timer += deltaTime;
+            var position = this.Owner.Transform.WorldTranslation;
+            
+            if(this.Start == true)
+            {
+                this.RandomDelay = this.Rand.Range(-0.5, 0.1);
+                this.Delay = this.Rand.Range(0.7, 1.2);
+                this.RandomDelay = this.Rand.Range(-0.1, 0.1);
+                this.ButtonType = this.Rand.DieRoll(4);
+                this.Start = false;
+            }
+            
+            if(this.Timer > this.Delay + this.RandomDelay)
+            {
+                if(this.ButtonType == 4)
+                {
+                    var theButton: Archetype = Archetype.Find("AGame");
+                    var spawnedStar = this.Space.CreateAtPosition(theButton, Real3(position.X, position.Y, 1.101));
+                    this.LimitNum -= 1;
+                }
+                
+                else if(this.ButtonType == 3)
+                {
+                    var theButton: Archetype = Archetype.Find("DGame");
+                    var spawnedStar = this.Space.CreateAtPosition(theButton, Real3(position.X, position.Y, 1.101));
+                    this.LimitNum -= 1;
+                }
+                
+                else if(this.ButtonType == 2)
+                {
+                    var theButton: Archetype = Archetype.Find("SGame");
+                    var spawnedStar = this.Space.CreateAtPosition(theButton, Real3(position.X, position.Y, 1.101));
+                    this.LimitNum -= 1;
+                }
+                
+                else if(this.ButtonType == 1)
+                {
+                    var theButton: Archetype = Archetype.Find("WGame");
+                    var spawnedStar = this.Space.CreateAtPosition(theButton, Real3(position.X, position.Y, 1.101));
+                    this.LimitNum -= 1;
+                }
+                this.Start = true;
+                this.Timer = 0;
+            }
+        }
+        
+        if(this.LimitNum <= 0)
+        {
+            this.FinishedSpawning = true;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+class RageDialog : ZilchComponent
+{
+    var Start : Boolean = false;
+    var Start2 : Boolean = true;
+    var CanDisplay : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        var icon = this.Owner.FindChildByName("Icon");
+        var text = this.Owner.FindChildByName("Text");
+        var background = this.Owner.FindChildByName("Background");
+        
+        if(this.Space.Global.HasRampaged == true && tracker.LevelTracker.CanPlay == true)
+        {
+            
+            if(this.Start == true)
+            {
+                background.Sprite.Visible = true;
+                icon.Sprite.Visible = true;
+                text.SpriteText.Visible = true;
+                tracker.LevelTracker.FinishedDialog = false;
+                
+                this.Start2 = true;
+                this.Start = false;
+            }
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                background.Sprite.Visible = false;
+                icon.Sprite.Visible = false;
+                text.SpriteText.Visible = false;
+                
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+}

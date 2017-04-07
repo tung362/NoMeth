@@ -1,0 +1,99 @@
+class GoalBox : ZilchComponent
+{
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        //Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnCollisionPersisted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "WGame")
+        {
+            if(Zero.Keyboard.KeyIsPressed(Keys.W))
+            {
+                this.Space.Global.Money += 5;
+                other.Destroy();
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.S))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.A))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.D))
+            {
+                this.Space.Global.Money -= 5;
+            }
+        }
+        else if(other.Name == "SGame")
+        {
+            if(Zero.Keyboard.KeyIsPressed(Keys.W))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.S))
+            {
+                this.Space.Global.Money += 5;
+                other.Destroy();
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.A))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.D))
+            {
+                this.Space.Global.Money -= 5;
+            }
+        }
+        else if(other.Name == "AGame")
+        {
+            if(Zero.Keyboard.KeyIsPressed(Keys.W))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.S))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.A))
+            {
+                this.Space.Global.Money += 5;
+                other.Destroy();
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.D))
+            {
+                this.Space.Global.Money -= 5;
+            }
+        }
+        else if(other.Name == "DGame")
+        {
+            if(Zero.Keyboard.KeyIsPressed(Keys.W))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.S))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.A))
+            {
+                this.Space.Global.Money -= 5;
+            }
+            else if(Zero.Keyboard.KeyIsPressed(Keys.D))
+            {
+                this.Space.Global.Money += 5;
+                other.Destroy();
+            }
+        }
+    }
+}

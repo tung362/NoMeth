@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "RageFlash",
+		uint64 ResourceId = 558ab5e645afc350,
+	},
+},

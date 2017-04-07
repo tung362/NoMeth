@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "CarRoad",
+		uint64 ResourceId = 558815247646a183,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 114,
+		uint FrameSizeY = 46,
+		uint FrameCount = 3,
+		float FrameDelay = 0.0625,
+		float OriginX = 57,
+		float OriginY = 23,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

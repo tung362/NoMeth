@@ -1,0 +1,53 @@
+class PlayerController : ZilchComponent
+{
+    var IsRight : Boolean = true;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        var movement = Real3(0.0, 0.0, 0.0);
+        
+        //Left
+        if((Zero.Keyboard.KeyIsDown(Keys.A)) && tracker.LevelTracker.FinishedDialog == true)
+        {
+            if(Zero.Keyboard.KeyIsDown(Keys.S) == false)
+            {
+                movement.X = -1.0;
+            }
+            
+            if(this.Owner.SweptController.Grounded)
+            {
+                this.Owner.Sprite.FlipX = true;
+                this.IsRight = false;
+            }
+        }
+        
+        //Right
+        if((Zero.Keyboard.KeyIsDown(Keys.D)) && tracker.LevelTracker.FinishedDialog == true)
+        {
+            if(Zero.Keyboard.KeyIsDown(Keys.S) == false)
+            {
+                movement.X = 1.0;
+            }
+            
+            if(this.Owner.SweptController.Grounded)
+            {
+                this.Owner.Sprite.FlipX = false;
+                this.IsRight = true;
+            }
+        }
+        
+        //Jump
+        if(Zero.Keyboard.KeyIsPressed(Keys.Space) && tracker.LevelTracker.FinishedDialog == true)
+        {
+            this.Owner.SweptController.Jump();
+        }
+        
+        this.Owner.SweptController.Update(movement, event.Dt);
+    }
+}

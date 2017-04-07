@@ -1,0 +1,36 @@
+class DoseNumText : ZilchComponent
+{
+    var Start : Boolean = false;
+    var Start2 : Boolean = true;
+        
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var drugRoom = this.Space.FindObjectByName("DrugMetalTable");
+        
+        if(drugRoom.DrugRoomD.CanDisplayDialog == true)
+        {
+            this.Owner.SpriteText.Text = "Doses Left: `this.Space.Global.NumberOfMeth`";
+            
+            if(this.Start == true)
+            {
+                this.Owner.SpriteText.Visible = true;
+                this.Start2 = true;
+                this.Start = false;
+            }
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                this.Owner.SpriteText.Visible = false;
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+}

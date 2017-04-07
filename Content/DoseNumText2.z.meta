@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DoseNumText2",
+		uint64 ResourceId = 559507a34b382efc,
+	},
+},

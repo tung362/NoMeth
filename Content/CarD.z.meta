@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "CarD",
+		uint64 ResourceId = 558adfd1d3ad48e4,
+	},
+},

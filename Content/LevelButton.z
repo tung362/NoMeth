@@ -1,0 +1,54 @@
+class LevelButton : ZilchComponent
+{
+    [Property]
+    var TheLevel : Level = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.MouseEnter, this.OnMouseEnter);
+        Zero.Connect(this.Owner, Events.MouseExit, this.OnMouseExit);
+        Zero.Connect(this.Owner, Events.MouseDown, this.OnMouseDown);
+        Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnMouseUp(event : ViewportMouseEvent)
+    {
+        //Let Go Of Click
+        
+        this.Space.LoadLevel(this.TheLevel);
+    }
+    
+    function OnMouseDown(event : ViewportMouseEvent)
+    {
+        //Clicked
+        
+        var r = 0;
+        var g = 0;
+        var b = 255;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+    
+    function OnMouseExit(event : ViewportMouseEvent)
+    {
+        //Exiting Button
+        
+        this.Owner.SpriteText.Color = Real4(1, 1, 1, 1);
+    }
+    
+    function OnMouseEnter(event : ViewportMouseEvent)
+    {
+        //Entering Button
+        
+        var r = 255;
+        var g = 0;
+        var b = 0;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+}

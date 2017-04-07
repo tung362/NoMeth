@@ -1,0 +1,104 @@
+class InjectText : ZilchComponent
+{
+    var Start : Boolean = false;
+    var Start2 : Boolean = true;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.MouseEnter, this.OnMouseEnter);
+        Zero.Connect(this.Owner, Events.MouseExit, this.OnMouseExit);
+        Zero.Connect(this.Owner, Events.MouseDown, this.OnMouseDown);
+        Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var drugRoom = this.Space.FindObjectByName("DrugMetalTable");
+        var player = this.Space.FindObjectByName("Player");
+        
+        if(drugRoom.DrugRoomD.CanDisplayDialog == true)
+        {
+            if(this.Start == true)
+            {
+               //player.Sprite.SpriteSource = this.PlayerInject1;
+                player.Sprite.SpriteSource = player.PlayerAnimation.PlayerInject1;
+                this.Owner.SpriteText.Visible = true;
+                this.Start2 = true;
+                this.Start = false;
+            }
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                this.Owner.SpriteText.Visible = false;
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+    
+    function OnMouseUp(event : ViewportMouseEvent)
+    {
+        //Let Go Of Click
+        
+        var drugRoom = this.Space.FindObjectByName("DrugMetalTable");
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        var drugDialog = this.Space.FindObjectByName("DrugRoomDialog");
+        var drugDialogChild = drugDialog.FindChildByName("Text");
+        var player = this.Space.FindObjectByName("Player");
+        
+        if(drugRoom.DrugRoomD.CanDisplayDialog == true)
+        {
+            if(this.Space.Global.NumberOfMeth > 0)
+            {
+                this.Space.Global.IsHigh = true;
+                this.Space.Global.IH = true;
+                //player.Sprite.SpriteSource = this.PlayerInject2;
+                player.Sprite.SpriteSource = player.PlayerAnimation.PlayerInject2;
+                player.PlayerAnimation.Timer = 0;
+                drugDialogChild.DrugText.Start2 = true;
+                drugDialog.DrugRoomDialog.CanDisplay = true;
+                drugDialog.DrugRoomDialog.Timer = 0;
+                tracker.LevelTracker.NumOfDoses += 1;
+                this.Space.Global.NumberOfMeth -= 1;
+                this.Space.Global.OverDoseNum += 150;
+                this.Space.Global.SatisfiedLevel += 30;
+            }
+        }
+    }
+    
+    function OnMouseDown(event : ViewportMouseEvent)
+    {
+        //Clicked
+        
+        var r = 0;
+        var g = 0;
+        var b = 255;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+    
+    function OnMouseExit(event : ViewportMouseEvent)
+    {
+        //Exiting Button
+        
+        var r : Real = 150;
+        var g : Real = 0;
+        var b : Real = 255;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+    
+    function OnMouseEnter(event : ViewportMouseEvent)
+    {
+        //Entering Button
+        
+        var r = 255;
+        var g = 0;
+        var b = 0;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+}

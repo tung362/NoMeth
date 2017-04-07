@@ -1,0 +1,20 @@
+Material = 
+{
+	Phong = 
+	{
+		float SpecularExponent = 40,
+		float SpecularScalar = 1,
+	},
+	Transparency = 
+	{
+		MaterialBlendMode BlendMode = Multiply,
+	},
+	ShadowShader = 
+	{
+		string Texture = "558be7eb164b83f6:TestBlackBG7_0",
+		float InnerRange = 0.8,
+		float OuterIntensity = 5,
+		Vec4 EdgeGlowColor = [1, 0, 0, 1],
+		Vec4 EdgeGlowColor2 = [0, 0.521569, 1, 1],
+	},
+},

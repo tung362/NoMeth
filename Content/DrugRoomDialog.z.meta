@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DrugRoomDialog",
+		uint64 ResourceId = 558b2652f4eb4c5d,
+	},
+},

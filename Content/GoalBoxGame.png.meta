@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "GoalBoxGame",
+		uint64 ResourceId = 559515a173b002ab,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 51,
+		uint FrameSizeY = 51,
+		uint FrameCount = 1,
+		float FrameDelay = 0.0833333,
+		float OriginX = 25,
+		float OriginY = 25,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

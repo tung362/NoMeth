@@ -1,0 +1,56 @@
+class SuitCase : ZilchComponent
+{
+    [Property]
+    var PlayerInject1N : SpriteSource = null;
+    [Property]
+    var PlayerInject2N : SpriteSource = null;
+    
+    [Property]
+    var PlayerDieN : SpriteSource = null;
+    [Property]
+    var PlayerDieOneFrameN : SpriteSource = null;
+    [Property]
+    var PlayerRageN : SpriteSource = null;
+    
+    [Property]
+    var PlayerIdleN : SpriteSource = null;
+    [Property]
+    var PlayerWalkN : SpriteSource = null;
+    [Property]
+    var PlayerJumpN : SpriteSource = null;
+    [Property]
+    var PlayerKneelN : SpriteSource = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+        //Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "Player")
+        {
+            //other.RemoveComponentByName("PlayerAnimation");
+            //other.AddComponentByName("PlayerAnimation");
+            other.PlayerAnimation.PlayerInject1 = this.PlayerInject1N;
+            other.PlayerAnimation.PlayerInject2 = this.PlayerInject2N;
+            other.PlayerAnimation.PlayerDie = this.PlayerDieN;
+            other.PlayerAnimation.PlayerDieOneFrame = this.PlayerDieOneFrameN;
+            other.PlayerAnimation.PlayerRage = this.PlayerRageN;
+            other.PlayerAnimation.PlayerIdle = this.PlayerIdleN;
+            other.PlayerAnimation.PlayerWalk = this.PlayerWalkN;
+            other.PlayerAnimation.PlayerJump = this.PlayerJumpN;
+            other.PlayerAnimation.PlayerKneel = this.PlayerKneelN;
+            other.Sprite.SpriteSource = this.PlayerIdleN;
+            this.Owner.Destroy();
+        }
+    }
+}

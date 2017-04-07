@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "SatisfiedBar",
+		uint64 ResourceId = 558a9e4b1c8c3755,
+	},
+},

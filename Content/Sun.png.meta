@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "Sun",
+		uint64 ResourceId = 558aab0f24ce726d,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 143,
+		uint FrameSizeY = 143,
+		uint FrameCount = 1,
+		float FrameDelay = 0.0833333,
+		float OriginX = 71,
+		float OriginY = 71,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

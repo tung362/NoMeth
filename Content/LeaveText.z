@@ -1,0 +1,115 @@
+class LeaveText : ZilchComponent
+{
+    [Property]
+    var TheLevel2 : Level = null;
+    [Property]
+    var TheLevel3 : Level = null;
+    [Property]
+    var TheLevel4 : Level = null;
+    [Property]
+    var TheLevel5 : Level = null;
+    [Property]
+    var TheLevel6 : Level = null;
+    [Property]
+    var TheLevel7 : Level = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.MouseEnter, this.OnMouseEnter);
+        Zero.Connect(this.Owner, Events.MouseExit, this.OnMouseExit);
+        Zero.Connect(this.Owner, Events.MouseDown, this.OnMouseDown);
+        Zero.Connect(this.Owner, Events.MouseUp, this.OnMouseUp);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnMouseUp(event : ViewportMouseEvent)
+    {
+        //Let Go Of Click
+        
+        if(this.Space.Global.DayNum == 1)
+        {
+            var decreaseOverDoseLevel = 0.07 * this.Space.Global.OverDoseNumMax;
+            this.Space.Global.OverDoseNum -= decreaseOverDoseLevel;
+            this.Space.Global.DayNum += 1;
+            this.Space.Global.IH = false;
+            this.Space.LoadLevel(this.TheLevel2);
+        }
+        else if(this.Space.Global.DayNum == 2)
+        {
+            var decreaseOverDoseLevel = 0.07 * this.Space.Global.OverDoseNumMax;
+            this.Space.Global.OverDoseNum -= decreaseOverDoseLevel;
+            this.Space.Global.DayNum += 1;
+            this.Space.Global.IH = false;
+            this.Space.LoadLevel(this.TheLevel3);
+        }
+        else if(this.Space.Global.DayNum == 3)
+        {
+            var decreaseOverDoseLevel = 0.07 * this.Space.Global.OverDoseNumMax;
+            this.Space.Global.OverDoseNum -= decreaseOverDoseLevel;
+            this.Space.Global.DayNum += 1;
+            this.Space.Global.IH = false;
+            this.Space.LoadLevel(this.TheLevel4);
+        }
+        else if(this.Space.Global.DayNum == 4)
+        {
+            var decreaseOverDoseLevel = 0.07 * this.Space.Global.OverDoseNumMax;
+            this.Space.Global.OverDoseNum -= decreaseOverDoseLevel;
+            this.Space.Global.DayNum += 1;
+            this.Space.Global.IH = false;
+            this.Space.LoadLevel(this.TheLevel5);
+        }
+        else if(this.Space.Global.DayNum == 5)
+        {
+            var decreaseOverDoseLevel = 0.07 * this.Space.Global.OverDoseNumMax;
+            this.Space.Global.OverDoseNum -= decreaseOverDoseLevel;
+            this.Space.Global.DayNum += 1;
+            this.Space.Global.IH = false;
+            this.Space.LoadLevel(this.TheLevel6);
+        }
+        else if(this.Space.Global.DayNum == 6)
+        {
+            var decreaseOverDoseLevel = 0.07 * this.Space.Global.OverDoseNumMax;
+            this.Space.Global.OverDoseNum -= decreaseOverDoseLevel;
+            this.Space.Global.DayNum += 1;
+            this.Space.Global.IH = false;
+            this.Space.LoadLevel(this.TheLevel7);
+        }
+    }
+    
+    function OnMouseDown(event : ViewportMouseEvent)
+    {
+        //Clicked
+        
+        var r = 0;
+        var g = 0;
+        var b = 255;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+    
+    function OnMouseExit(event : ViewportMouseEvent)
+    {
+        //Exiting Button
+        
+        var r : Real = 0;
+        var g : Real = 255;
+        var b : Real = 0;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+    
+    function OnMouseEnter(event : ViewportMouseEvent)
+    {
+        //Entering Button
+        
+        var r = 255;
+        var g = 0;
+        var b = 0;
+        
+        this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+    }
+}

@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "NormalSprite",
+		uint64 ResourceId = 558a9f3eb2fdd0b2,
+	},
+},

@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DieFlash",
+		uint64 ResourceId = 558ab5fc4b96cc4d,
+	},
+},

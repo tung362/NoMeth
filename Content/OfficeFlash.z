@@ -1,0 +1,38 @@
+class OfficeFlash : ZilchComponent
+{
+    [Property]
+    var ToLevel : Level = null;
+    
+    var Timer : Real = 0;
+    var Delay : Real = 5;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        var spawner = this.Space.FindObjectByName("ButtonSpawner");
+        var objectColor = this.Owner.Sprite.Color;
+        
+        if(spawner.ButtonSpawner.FinishedSpawning == true)
+        {
+            this.Timer += deltaTime;
+            if(this.Timer > this.Delay)
+            {
+                if(objectColor.W < 0.98)
+                {
+                    this.Owner.Sprite.Color += Real4(0, 0, 0, 0.5) * event.Dt;
+                }
+                
+                if(objectColor.W >= 0.98)
+                {
+                    this.Owner.Sprite.Color = Real4(0, 0, 0, 1);
+                    this.Space.LoadLevel(this.ToLevel);
+                }
+            }
+        }
+    }
+}

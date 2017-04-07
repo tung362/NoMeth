@@ -1,0 +1,85 @@
+class CountDown : ZilchComponent
+{
+    var Timer : Real = 5;
+    var Delay : Real = 1;
+    
+    var Start : Boolean = false;
+    var Start2 : Boolean = true;
+    
+    var StateNum : Integer = 0;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        if(tracker.LevelTrackerOffice.CanPlay == false)
+        {
+            this.Timer += deltaTime;
+            
+            if(this.Start == true)
+            {
+                this.Owner.SpriteText.Visible = true;
+                this.Start2 = true;
+                this.Start = false;
+            }
+            
+            if(this.Timer > this.Delay)
+            {
+                this.StateNum += 1;
+                this.Timer = 0;
+            }
+            
+            if(this.StateNum == 1)
+            {
+                this.Owner.SpriteText.Text = "3..."; //Loading.
+                var r : Real = 255;
+                var g : Real = 0;
+                var b : Real = 0;
+                this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+            }
+            
+            else if(this.StateNum == 2)
+            {
+                this.Owner.SpriteText.Text = "2..."; //Loading..
+                var r : Real = 0;
+                var g : Real = 255;
+                var b : Real = 0;
+                this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+            }
+            
+            else if(this.StateNum == 3)
+            {
+                this.Owner.SpriteText.Text = "1..."; //Loading...
+                var r : Real = 0;
+                var g : Real = 0;
+                var b : Real = 255;
+                this.Owner.SpriteText.Color = Real4(r / 255, g / 255, b / 255, 1);
+            }
+            
+            else if(this.StateNum == 4)
+            {
+                this.Owner.SpriteText.Text = "Go!"; //Loading
+                this.Owner.SpriteText.Color = Real4(1, 1, 1, 1);
+            }
+            else if(this.StateNum == 5)
+            {
+                tracker.LevelTrackerOffice.CanPlay = true;
+            }
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                this.Owner.SpriteText.Visible = false;
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+}

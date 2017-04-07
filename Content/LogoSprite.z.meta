@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "LogoSprite",
+		uint64 ResourceId = 55dca7c907f8ea4e,
+	},
+},

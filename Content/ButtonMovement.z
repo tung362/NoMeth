@@ -1,0 +1,29 @@
+class ButtonMovement : ZilchComponent
+{
+    [Property]
+    var Speed : Real = 10;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var movement = Real3(0, 0, 0);
+        movement.X -= 1;
+        
+        this.Owner.RigidBody.Velocity = movement * event.Dt * this.Speed;
+    }
+    
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "ButtonDestroyer")
+        {
+            this.Owner.Destroy();
+        }
+    }
+}

@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "GoalBox",
+		uint64 ResourceId = 559512f75d247915,
+	},
+},

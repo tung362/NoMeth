@@ -1,0 +1,36 @@
+class RoadLevelSwitch : ZilchComponent
+{
+    [Property]
+    var TheLevel : Level = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "Car")
+        {
+            this.Space.LoadLevel(this.TheLevel);
+        }
+    }
+            
+    function OnCollisionPersisted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "Car")
+        {
+            this.Space.LoadLevel(this.TheLevel);
+        }
+    }
+}

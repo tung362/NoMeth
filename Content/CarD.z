@@ -1,0 +1,64 @@
+class CarD : ZilchComponent
+{
+    var Timer : Real = 0;
+    var PlayerCollided : Boolean = false;
+    var CanDisplayDialog : Boolean = false;
+    
+    [Property]
+    var TheLevel : Level = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+        Zero.Connect(this.Owner, Events.CollisionPersisted, this.OnCollisionPersisted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        var objectPosition = this.Owner.Transform.Translation;
+        
+        if(this.PlayerCollided == true)
+        {
+            this.Timer += deltaTime;
+            
+            if(this.Timer > 0.3)
+            {
+                this.PlayerCollided = false;
+                this.Timer = 0;
+            }
+            
+            if(this.PlayerCollided == true)
+            {
+                if(Zero.Keyboard.KeyIsPressed(Keys.E))
+                {
+                    this.Space.LoadLevel(this.TheLevel);
+                    this.CanDisplayDialog = true;
+                }
+            }
+        }
+    }
+    
+    function OnCollisionStarted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "Player" && this.CanDisplayDialog == false)
+        {
+            this.PlayerCollided = true;
+            this.Timer = 0;
+        }
+    }
+            
+    function OnCollisionPersisted(event : CollisionEvent)
+    {
+        var other = event.OtherObject;
+        
+        if(other.Name == "Player" && this.CanDisplayDialog == false)
+        {
+            this.PlayerCollided = true;
+            this.Timer = 0;
+        }
+    }
+}

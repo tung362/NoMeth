@@ -1,0 +1,50 @@
+[Pixel][AutoBlock]
+class ShadowShader
+{
+    // Custom Inputs
+    [Input]
+    var Texture : Sampler2d = null;
+    [Input]
+    var InnerRange : Real = 0.0;
+    [Input]
+    var OuterIntensity : Real = 0.0;
+    [Input]
+    var EdgeGlowColor : Real4 = Real4();
+    [Input]
+    var EdgeGlowColor2 : Real4 = Real4();
+
+    //Built In
+    // View Space Normal
+    [Input]
+    var Normal : Real3 = Real3();
+    // Us from mesh
+    [Input]
+    var Uv : Real2 = Real2();
+    // Time in seconds
+    [Input]
+    var Time : Real = 0.0;
+    // Object color from model
+    //[Input]
+    //var ObjectColor : Real4 = Real4();
+    // Position in view space
+    [Input]
+    var PixelPosition : Real3 = Real3();
+    //Eye is at 0,0,0  
+    
+    //Color added to the surface
+    [Output]
+    var Additive : Real4 = Real4();
+    
+    //Surface effected by lighting
+    [Output]
+    var SurfaceColor : Real4 = Real4();
+    
+    function Main()
+    {
+        var texColor = this.Texture.Sample(this.Uv);
+        var scalar = Math.Saturate(1.0 - Math.Dot(-Math.Normalize(this.PixelPosition), this.Normal));
+        scalar = Math.Pow(scalar, this.InnerRange) * this.OuterIntensity;
+        this.Additive = scalar * this.EdgeGlowColor * texColor;
+        this.SurfaceColor = this.EdgeGlowColor2;
+    }
+}

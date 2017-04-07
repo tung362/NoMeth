@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "SuitCase",
+		uint64 ResourceId = 55b88067934ab223,
+	},
+},

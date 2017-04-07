@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchFragmentBuilder = 
+	{
+		string Name = "ShadowShader",
+		uint64 ResourceId = 558be6922adc2a2c,
+	},
+},

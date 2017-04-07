@@ -1,0 +1,34 @@
+class RageFlash : ZilchComponent
+{
+    [Property]
+    var ToLevel : Level = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        var objectColor = this.Owner.Sprite.Color;
+        
+        if(tracker.LevelTracker.FinishedRageCounter == true)
+        {
+            //X = R
+            //Y = G
+            //Z = B
+            //W = A
+            if(objectColor.W < 0.98)
+            {
+                this.Owner.Sprite.Color += Real4(0, 0, 0, 0.5) * event.Dt;
+            }
+            
+            if(objectColor.W >= 0.98)
+            {
+                this.Owner.Sprite.Color = Real4(0, 0, 0, 1);
+                this.Space.LoadLevel(this.ToLevel);
+            }
+        }
+    }
+}

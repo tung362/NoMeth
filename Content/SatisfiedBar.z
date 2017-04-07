@@ -1,0 +1,54 @@
+class SatisfiedBar : ZilchComponent
+{
+    //Starting X position
+    var ObjectX : Real = 0;
+    //Starting scale
+    var FirstScale : Real3 = Real3(0, 0, 0);
+    
+    var Start : Boolean = false;
+    var Start2 : Boolean = true;
+        
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        this.ObjectX = this.Owner.Transform.Translation.X;
+        this.FirstScale = this.Owner.Transform.Scale;
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        if(tracker.LevelTracker.CanPlay == true)
+        {
+            if(this.Start == true)
+            {
+                this.Owner.Sprite.Visible = true;
+                this.Start2 = true;
+                this.Start = false;
+            }
+            
+            var objectPosition = this.Owner.Transform.Translation;
+                
+            //Scale Adjustment
+            var progress = this.Space.Global.SatisfiedLevel / this.Space.Global.SatisfiedLevelMax;
+            
+            //Position Adjustment
+            var objectAdjust = (1 - progress) * 0.7;
+            var newPosition = (this.ObjectX - objectAdjust);
+            
+            this.Owner.Transform.Scale = Real3(progress * this.FirstScale.X, 0.5, 1);
+            this.Owner.Transform.Translation = Real3(newPosition, objectPosition.Y, objectPosition.Z);
+            //Console.WriteLine(progress);
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                this.Owner.Sprite.Visible = false;
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+}

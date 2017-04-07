@@ -1,0 +1,43 @@
+class DrugText : ZilchComponent
+{
+    var Rand : Random = Random();
+    var RandomNumber : Integer = 0;
+    var Start : Boolean = true;
+    var Start2 : Boolean = true;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        this.RandomNumber = this.Rand.DieRoll(4);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(this.Start2 == true)
+        {
+            this.RandomNumber = this.Rand.DieRoll(4);
+            this.Start2 = false;
+        }
+        
+        if(this.Start == true)
+        {
+            if(this.RandomNumber == 1)
+            {
+                this.Owner.SpriteText.Text = "I feel cooler already!";
+            }
+            else if(this.RandomNumber == 2)
+            {
+                this.Owner.SpriteText.Text = "OHHHH YEAHHHHHHHHH";
+            }
+            else if(this.RandomNumber == 3)
+            {
+                this.Owner.SpriteText.Text = "Thats the stuff!";
+            }
+            else if(this.RandomNumber == 4)
+            {
+                this.Owner.SpriteText.Text = "Ah... Much better!";
+            }
+            this.Start = false;
+        }
+    }
+}

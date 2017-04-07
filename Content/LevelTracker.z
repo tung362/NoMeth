@@ -1,0 +1,49 @@
+class LevelTracker : ZilchComponent
+{
+    var NumOfDoses : Integer = 0;
+    
+    [Property]
+    var CanPlay : Boolean = false;
+    
+    var Dialog1 : Boolean = true;
+    var Dialog2 : Boolean = false;
+    
+    [Property]
+    var FinishedDialog : Boolean = false;
+    
+    var StartDieCounter : Boolean = false;
+    var DieTimer : Real = 0;
+    var FinishedDieCounter : Boolean = false;
+    
+    var StartRageCounter : Boolean = false;
+    var RageTimer : Real = 0;
+    var FinishedRageCounter : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        
+        if(this.StartDieCounter == true)
+        {
+            this.DieTimer += deltaTime;
+            if(this.DieTimer > 2)
+            {
+                this.FinishedDieCounter = true;
+            }
+        }
+        
+        if(this.StartRageCounter == true)
+        {
+            this.RageTimer += deltaTime;
+            if(this.RageTimer > 2)
+            {
+                this.FinishedRageCounter = true;
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DayModifyer",
+		uint64 ResourceId = 558ab2fa02cd7745,
+	},
+},

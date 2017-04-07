@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "Shelf",
+		uint64 ResourceId = 558812455add533c,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 43,
+		uint FrameSizeY = 6,
+		uint FrameCount = 1,
+		float FrameDelay = 0.0833333,
+		float OriginX = 21,
+		float OriginY = 3,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

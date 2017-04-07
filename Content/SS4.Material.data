@@ -1,0 +1,28 @@
+Material = 
+{
+	Phong = 
+	{
+		float SpecularExponent = 4,
+		float SpecularScalar = 0.4,
+	},
+	Transparency = 
+	{
+		MaterialBlendMode BlendMode = Multiply,
+	},
+	NormalMapping = 
+	{
+		float Bumpiness = 1,
+		string NormalMapTexture = "558be7eb164b83f6:TestBlackBG7_0",
+		Vec2 NormalScroll = [0, 0],
+		Vec2 NormalTiling = [1, 1],
+		Vec2 NormalOffset = [-70, 0],
+	},
+	ShadowShader = 
+	{
+		string Texture = "558be7eb164b83f6:TestBlackBG7_0",
+		float InnerRange = 0.8,
+		float OuterIntensity = 5,
+		Vec4 EdgeGlowColor = [0, 0, 0, 1],
+		Vec4 EdgeGlowColor2 = [0, 0, 0, 1],
+	},
+},

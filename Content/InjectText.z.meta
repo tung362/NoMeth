@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "InjectText",
+		uint64 ResourceId = 558af8a193771189,
+	},
+},

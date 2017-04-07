@@ -1,0 +1,153 @@
+class PlayerAnimation : ZilchComponent
+{
+    var Rand : Random = Random();
+    
+    var Timer : Real = 0;
+    
+    [Property]
+    var PlayerInject1 : SpriteSource = null;
+    [Property]
+    var PlayerInject2 : SpriteSource = null;
+    
+    [Property]
+    var PlayerDie : SpriteSource = null;
+    [Property]
+    var PlayerDieOneFrame : SpriteSource = null;
+    [Property]
+    var PlayerRage : SpriteSource = null;
+    
+    //Animations
+    [Property]
+    var PlayerIdle : SpriteSource = null;
+    [Property]
+    var PlayerWalk : SpriteSource = null;
+    [Property]
+    var PlayerJump : SpriteSource = null;
+    [Property]
+    var PlayerKneel : SpriteSource = null;
+    
+    var Start : Boolean = true;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        if(this.Owner.Sprite.SpriteSource == this.PlayerInject2 && this.Space.Global.HasOverDosed == false && this.Space.Global.HasRampaged == false)
+        {
+            this.Timer += deltaTime;
+            if(this.Timer > 0.5)
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerInject1;
+                this.Timer = 0;
+            }
+        }
+        
+        if(this.Space.Global.HasOverDosed == true)
+        {
+            if(this.Start == true)
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerDie;
+                this.Start = false;
+            }
+            else
+            {
+                if(this.Owner.Sprite.CurrentFrame >= this.Owner.Sprite.SpriteSource.FrameCount - 1)
+                {
+                    tracker.LevelTracker.StartDieCounter = true;
+                    this.Owner.Sprite.SpriteSource = this.PlayerDieOneFrame;
+                }
+            }
+        }
+        
+        if(this.Space.Global.HasRampaged == true && tracker.LevelTracker.CanPlay == true)
+        {
+            if(this.Start == true)
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerRage;
+                this.Start = false;
+            }
+            else
+            {
+                var cam = this.Space.FindObjectByName("Camera");
+                var camPos = cam.Transform.Translation;
+                tracker.LevelTracker.StartRageCounter = true;
+                
+                cam.Transform.Translation = Real3(-0.020 + this.Rand.Range(0.05, 0.1), 0.516 + this.Rand.Range(0.05, 0.1), 39);
+            }
+        }
+        
+        //Idle
+        if(this.Owner.Sprite.SpriteSource == this.PlayerIdle && tracker.LevelTracker.FinishedDialog == true)
+        {
+            //Walk
+            if(Zero.Keyboard.KeyIsDown(Keys.A) || Zero.Keyboard.KeyIsDown(Keys.D))
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerWalk;
+            }
+            
+            //Jump
+            if(Zero.Keyboard.KeyIsPressed(Keys.Space))
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerJump;
+            }
+            
+            //Kneel
+            if(Zero.Keyboard.KeyIsDown(Keys.S))
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerKneel;
+            }
+        }
+        
+        //Kneel
+        else if(this.Owner.Sprite.SpriteSource == this.PlayerKneel && tracker.LevelTracker.FinishedDialog == true)
+        {
+            //Idle
+            if(Zero.Keyboard.KeyIsDown(Keys.S) == false)
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerIdle;
+            }
+            
+            //Jump
+            if(Zero.Keyboard.KeyIsPressed(Keys.Space))
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerJump;
+            }
+        }
+        
+        //Walk
+        else if(this.Owner.Sprite.SpriteSource == this.PlayerWalk && tracker.LevelTracker.FinishedDialog == true)
+        {
+            if(Zero.Keyboard.KeyIsDown(Keys.A) == false && Zero.Keyboard.KeyIsDown(Keys.D) == false)
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerIdle;
+            }
+            
+            if(Zero.Keyboard.KeyIsPressed(Keys.Space))
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerJump;
+            }
+            
+            //Kneel
+            if(Zero.Keyboard.KeyIsDown(Keys.S))
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerKneel;
+            }
+        }
+        
+        //Jump
+        else if(this.Owner.Sprite.SpriteSource == this.PlayerJump && tracker.LevelTracker.FinishedDialog == true)
+        {
+            //Idle
+            if(this.Owner.SweptController.Grounded)
+            {
+                this.Owner.Sprite.SpriteSource = this.PlayerIdle;
+            }
+        }
+    }
+}

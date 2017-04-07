@@ -1,0 +1,20 @@
+ImageContent = 
+{
+	SpriteSourceBuilder = 
+	{
+		string Name = "AustinBed",
+		uint64 ResourceId = 558814f28e3f22d9,
+		uint64 AtlasId = 5274cf95e4a661fd,
+		uint FrameSizeX = 70,
+		uint FrameSizeY = 40,
+		uint FrameCount = 1,
+		float FrameDelay = 0.0833333,
+		float OriginX = 35,
+		float OriginY = 20,
+		float PixelsPerUnit = 64,
+		bool Smoothing = false,
+		bool Looping = true,
+		Vec4 Slices = [0, 0, 0, 0],
+		SpriteFill Fill = Stretch,
+	},
+},

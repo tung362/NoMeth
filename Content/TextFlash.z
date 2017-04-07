@@ -1,0 +1,82 @@
+class TextFlash : ZilchComponent
+{
+    var Timer : Real = 0;
+    var Delay : Real = 2;
+    
+    var Timer2 : Real = 0;
+    var Delay2 : Real = 2;
+    
+    var Speed : Real = 0.3;
+    
+    var CanFlash : Boolean = false;
+    var CanFade : Boolean = false;
+    var FinishedFlashing : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime  = event.Dt;
+        var objectColor = this.Owner.SpriteText.Color;
+        
+        if(this.CanFlash == false && this.FinishedFlashing == false)
+        {
+            this.Timer += deltaTime;
+            if(this.Timer > this.Delay)
+            {
+                this.CanFlash = true;
+                this.Timer = 0;
+            }
+        }
+        
+        if(this.FinishedFlashing == true && this.CanFade == false)
+        {
+            this.Timer2 += deltaTime;
+            if(this.Timer2 > this.Delay2)
+            {
+                this.CanFade = true;
+                this.Timer2 = 0;
+            }
+        }
+        
+        if(this.CanFlash == true)
+        {
+            //X = R
+            //Y = G
+            //Z = B
+            //W = A
+            if(objectColor.W < 0.98)
+            {
+                this.Owner.SpriteText.Color += Real4(0, 0, 0, this.Speed) * event.Dt;
+            }
+            
+            if(objectColor.W >= 0.98)
+            {
+                this.FinishedFlashing = true;
+                this.Owner.SpriteText.Color = Real4(1, 1, 1, 1);
+                this.CanFlash = false;
+            }
+        }
+        
+        if(this.CanFade == true)
+        {
+            //X = R
+            //Y = G
+            //Z = B
+            //W = A
+            if(objectColor.W <= 1)
+            {
+                this.Owner.SpriteText.Color -= Real4(0, 0, 0, this.Speed) * event.Dt;
+            }
+            
+            if(objectColor.W < 0.02)
+            {
+                this.Owner.SpriteText.Color = Real4(1, 1, 1, 0);
+                this.CanFade = false;
+            }
+        }
+    }
+}

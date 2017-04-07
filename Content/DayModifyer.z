@@ -1,0 +1,48 @@
+class DayModifyer : ZilchComponent
+{
+    var Start : Boolean = true;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        if(tracker.LevelTracker.CanPlay == true && this.Space.Global.DayNum >= 2)
+        {
+            if(this.Start == true)
+            {
+                if(this.Space.Global.DayNum == 2)
+                {
+                    var decreaseSatisfiedLevel = 0.2 * this.Space.Global.SatisfiedLevelMax;
+                    this.Space.Global.SatisfiedLevel -= decreaseSatisfiedLevel;
+                }
+                else if(this.Space.Global.DayNum == 3)
+                {
+                    var decreaseSatisfiedLevel = 0.25 * this.Space.Global.SatisfiedLevelMax;
+                    this.Space.Global.SatisfiedLevel -= decreaseSatisfiedLevel;
+                }
+                else if(this.Space.Global.DayNum == 4)
+                {
+                    var decreaseSatisfiedLevel = 0.3 * this.Space.Global.SatisfiedLevelMax;
+                    this.Space.Global.SatisfiedLevel -= decreaseSatisfiedLevel;
+                }
+                else if(this.Space.Global.DayNum == 5)
+                {
+                    var decreaseSatisfiedLevel = 0.35 * this.Space.Global.SatisfiedLevelMax;
+                    this.Space.Global.SatisfiedLevel -= decreaseSatisfiedLevel;
+                }
+                else if(this.Space.Global.DayNum == 6)
+                {
+                    var decreaseSatisfiedLevel = 0.4 * this.Space.Global.SatisfiedLevelMax;
+                    this.Space.Global.SatisfiedLevel -= decreaseSatisfiedLevel;
+                }
+                
+                this.Start = false;
+            }
+        }
+    }
+}

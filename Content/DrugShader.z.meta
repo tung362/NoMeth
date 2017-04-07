@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "DrugShader",
+		uint64 ResourceId = 55dca1d7dc179049,
+	},
+},

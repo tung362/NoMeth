@@ -1,0 +1,117 @@
+class Global : ZilchComponent
+{
+    var IH : Boolean = false;
+    
+    var OverDoseNum : Real = 0;
+    var OverDoseNumMax : Real = 600;
+    
+    var SatisfiedLevel : Real = 50;
+    var SatisfiedLevelMax : Real = 100;
+    
+    var NumberOfMeth : Integer = 1;
+    var IsHigh : Boolean = false;
+    
+    var HasOverDosed : Boolean = false;
+    var HasRampaged : Boolean = false;
+    
+    var DayNum : Integer = 1;
+    var Start : Boolean = true;
+    
+    var Money : Integer = 100;
+    
+    [Property]
+    var MainMenu : Level = null;
+    [Property]
+    var Lose : Level = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.GameSession, Events.GameRequestQuit, this.OnGameRequestQuit);
+    }
+
+    function OnGameRequestQuit(event : GameEvent)
+    {
+        event.Handled = true;
+    }
+    
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        if(Zero.Keyboard.KeyIsPressed(Keys.Escape))
+        {
+            this.Space.LoadLevel(this.MainMenu);
+        }
+        
+        if(this.OverDoseNum >= this.OverDoseNumMax)
+        {
+            this.OverDoseNum = this.OverDoseNumMax;
+            this.HasOverDosed = true;
+        }
+        
+        if(this.SatisfiedLevel <= 0)
+        {
+            this.SatisfiedLevel = 0;
+            this.HasRampaged = true;
+        }
+        
+        //Corrections
+        if(this.OverDoseNum < 0)
+        {
+            this.OverDoseNum = 0;
+        }
+        
+        if(this.SatisfiedLevel > this.SatisfiedLevelMax)
+        {
+            this.SatisfiedLevel = this.SatisfiedLevelMax;
+        }
+        
+        if(this.DayNum >= 7)
+        {
+            this.HasOverDosed = true;
+        }
+        
+        if(this.Start == true)
+        {
+            if(this.DayNum == 1)
+            {
+                this.SatisfiedLevelMax = 100;
+            }
+            else if(this.DayNum == 2)
+            {
+                this.SatisfiedLevelMax = 200;
+            }
+            else if(this.DayNum == 3)
+            {
+                this.SatisfiedLevelMax = 300;
+            }
+            else if(this.DayNum == 4)
+            {
+                this.SatisfiedLevelMax = 400;
+            }
+            else if(this.DayNum == 5)
+            {
+                this.SatisfiedLevelMax = 400;
+            }
+            else if(this.DayNum == 6)
+            {
+                this.SatisfiedLevelMax = 400;
+            }
+            this.Start = false;
+        }
+        
+        if(Zero.Keyboard.KeyIsPressed(Keys.Nine))
+        {
+            this.OverDoseNum += 50;
+        }
+        
+        if(Zero.Keyboard.KeyIsPressed(Keys.Eight))
+        {
+            this.SatisfiedLevel -= 10;
+        }
+        
+        if(Zero.Keyboard.KeyIsPressed(Keys.One))
+        {
+            this.Space.LoadLevel(this.Lose);
+        }
+    }
+}

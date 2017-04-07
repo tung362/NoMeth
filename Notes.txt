@@ -1,0 +1,39 @@
+http://www.methproject.org/answers/what-does-meth-do-to-your-body.html#Body-by-Meth
+i'm a car!
+
+Notes:
+Time is changed by months
+Work minigame is button pressing, more points you earn the more money you get
+
+Global Data:
+OverDose level - Dies
+Satisfied level - Rampage
+
+Local Data:
+Number of doses
+
+Levels:
+Bed Room - += Satisfied, += OverDoes
+Work place - += Money
+Drug Dealer - -=Money
+Streets - Rampage
+
+Endings:
+Die from OverDose
+Get shot by cops
+
+StoryLine:
+You are a random man who decides to try Meth for the first time believing
+it wont hurt him.
+
+Dialog for drug injection:
+I feel cooler already!
+OHHHH YEAHHHHHHHHH
+Thats the stuff!
+
+ADD SUITCASE
+
+Meth Cost 120
+Meth Total: 720
+Total money earned in a day is 105
+Money Total: 730

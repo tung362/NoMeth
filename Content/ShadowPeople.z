@@ -1,0 +1,70 @@
+class ShadowPeople : ZilchComponent
+{
+    var Start : Boolean = true;
+    var Start2 : Boolean = true;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var player = this.Space.FindObjectByName("Player");
+        var objectPosition = this.Owner.Transform.WorldTranslation;
+        var otherObject = player.Transform.WorldTranslation;
+        var difference = Real3(otherObject.X - objectPosition.X, otherObject.Y - objectPosition.Y, otherObject.Z - objectPosition.Z);
+        var distance = Math.Sqrt(Math.Pow(difference.X, 2) + Math.Pow(difference.Y, 2) + Math.Pow(difference.Z, 2));
+        
+        var objectColor = this.Owner.Sprite.Color;
+        
+        if(distance / 14 < 0.98)
+        {
+            if(distance / 14 >= 0.7)
+            {
+                if(objectColor.W >= 0.6)
+                {
+                    this.Owner.Sprite.Color = Real4(1, 1, 1, distance / 14);
+                }
+                else
+                {
+                    this.Owner.Sprite.Color += Real4(0, 0, 0, 0.3) * event.Dt;
+                }
+            }
+            else
+            {
+                if(objectColor.W <= 0.02)
+                {
+                    this.Owner.Sprite.Color = Real4(1, 1, 1, 0);
+                }
+                else
+                {
+                    this.Owner.Sprite.Color -= Real4(0, 0, 0, 0.3) * event.Dt;
+                }
+            }
+        }
+        else
+        {
+            this.Owner.Sprite.Color = Real4(1, 1, 1, 1);
+        }
+        
+        if(player.Transform.WorldTranslation.X < this.Owner.Transform.WorldTranslation.X)
+        {
+            if(this.Start == true)
+            {
+                this.Owner.Sprite.FlipX = true;
+                this.Start2 = true;
+                this.Start = false;
+            }
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                this.Owner.Sprite.FlipX = false;
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+}

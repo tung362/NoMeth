@@ -1,0 +1,55 @@
+class BlackFlash : ZilchComponent
+{
+    var Timer : Real = 0;
+    var Delay : Real = 2;
+    
+    var Speed : Real = 0.3;
+    
+    var StartFading : Boolean = false;
+    var FinishedFading : Boolean = false;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime  = event.Dt;
+        var objectColor = this.Owner.Sprite.Color;
+        var monthText = this.Space.FindObjectByName("TextFlash");
+        var tracker = this.Space.FindObjectByName("LevelTracker");
+        
+        if(monthText.TextFlash.FinishedFlashing == true)
+        {
+            if(this.StartFading == false)
+            {
+                this.Timer += deltaTime;
+                if(this.Timer > this.Delay)
+                {
+                    this.StartFading = true;
+                    this.Timer = 0;
+                }
+            }
+        }
+        
+        if(this.StartFading == true && this.FinishedFading == false)
+        {
+            //X = R
+            //Y = G
+            //Z = B
+            //W = A
+            if(objectColor.W <= 1)
+            {
+                this.Owner.Sprite.Color -= Real4(0, 0, 0, this.Speed) * event.Dt;
+            }
+            
+            if(objectColor.W < 0.02)
+            {
+                tracker.LevelTracker.CanPlay = true;
+                this.Owner.Sprite.Color = Real4(1, 1, 1, 0);
+                this.FinishedFading = true;
+            }
+        }
+    }
+}

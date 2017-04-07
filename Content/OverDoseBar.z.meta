@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "OverDoseBar",
+		uint64 ResourceId = 558ae18d13c21956,
+	},
+},

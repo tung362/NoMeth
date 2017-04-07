@@ -1,0 +1,21 @@
+class MainMusic : ZilchComponent
+{
+    var BackgroundMusicObject : Cog = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        //Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        
+        this.BackgroundMusicObject = this.Space.FindObjectByName("MusicBox");
+        // If the there is background music
+        if(this.BackgroundMusicObject != null)
+        {
+            this.BackgroundMusicObject.SoundEmitter.Play();
+            this.BackgroundMusicObject.Persistent = true;
+        }
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+}

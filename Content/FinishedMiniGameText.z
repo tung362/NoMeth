@@ -1,0 +1,44 @@
+class FinishedMiniGameText : ZilchComponent
+{
+    var Start : Boolean = false;
+    var Start2 : Boolean = true;
+    
+    var Timer : Real = 0;
+    var Delay : Real = 3;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var deltaTime = event.Dt;
+        var spawner = this.Space.FindObjectByName("ButtonSpawner");
+        
+        if(spawner.ButtonSpawner.FinishedSpawning == true)
+        {
+            this.Timer += deltaTime;
+            
+            if(this.Timer > this.Delay)
+            {
+                if(this.Start == true)
+                {
+                    this.Owner.SpriteText.Visible = true;
+                    this.Start2 = true;
+                    this.Start = false;
+                }
+                this.Timer = 0;
+            }
+        }
+        else
+        {
+            if(this.Start2 == true)
+            {
+                this.Owner.SpriteText.Visible = false;
+                this.Start = true;
+                this.Start2 = false;
+            }
+        }
+    }
+}
